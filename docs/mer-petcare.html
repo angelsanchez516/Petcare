@@ -1,0 +1,1493 @@
+<title>MER PetCare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ink:#14211d; --ink-soft:#4a5c56; --ink-faint:#7b8c86;
+  --paper:#f6f8f6; --surface:#ffffff; --surface-2:#eef3f0;
+  --line:#dee6e2; --line-strong:#c3d1cb;
+  --accent:#0d7a67; --accent-soft:#e3f1ed;
+  --ent-strong:#0d7a67; --ent-strong-bg:#e2f0ec;
+  --ent-catalog:#3b5c7e; --ent-catalog-bg:#e5ecf3;
+  --ent-assoc:#9a610c;  --ent-assoc-bg:#f6eddc;
+  --ent-weak:#6b5480;   --ent-weak-bg:#eee9f3;
+  --bad:#a33a2a; --good:#2c6e49;
+  --shadow:0 1px 2px rgba(20,33,29,.05), 0 8px 24px -16px rgba(20,33,29,.28);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#e4ede9; --ink-soft:#9fb3ac; --ink-faint:#6e837c;
+    --paper:#101815; --surface:#17211d; --surface-2:#1e2a25;
+    --line:#2a3833; --line-strong:#3a4c45;
+    --accent:#4fbfa6; --accent-soft:#16332c;
+    --ent-strong:#4fbfa6; --ent-strong-bg:#15302a;
+    --ent-catalog:#7ba5ce; --ent-catalog-bg:#1a2a38;
+    --ent-assoc:#d9a441;  --ent-assoc-bg:#332816;
+    --ent-weak:#a98bc4;   --ent-weak-bg:#282136;
+    --bad:#e08272; --good:#6fc793;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#e4ede9; --ink-soft:#9fb3ac; --ink-faint:#6e837c;
+  --paper:#101815; --surface:#17211d; --surface-2:#1e2a25;
+  --line:#2a3833; --line-strong:#3a4c45;
+  --accent:#4fbfa6; --accent-soft:#16332c;
+  --ent-strong:#4fbfa6; --ent-strong-bg:#15302a;
+  --ent-catalog:#7ba5ce; --ent-catalog-bg:#1a2a38;
+  --ent-assoc:#d9a441;  --ent-assoc-bg:#332816;
+  --ent-weak:#a98bc4;   --ent-weak-bg:#282136;
+  --bad:#e08272; --good:#6fc793;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px -16px rgba(0,0,0,.6);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+code,.mono{font-family:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace}
+
+/* ---------- shell ---------- */
+.shell{max-width:1460px; margin:0 auto; display:grid; grid-template-columns:236px minmax(0,1fr); gap:0}
+.rail{
+  position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+  padding:38px 22px 38px 30px; border-right:1px solid var(--line);
+}
+.main{min-width:0; padding:38px 44px 96px}
+
+.rail-mark{display:flex; align-items:center; gap:9px; margin-bottom:26px}
+.rail-mark svg{flex:none}
+.rail-mark b{font-family:"Newsreader",Georgia,serif; font-size:19px; font-weight:600; letter-spacing:-.01em}
+.rail h4{
+  font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-faint);
+  margin:0 0 10px; font-weight:600;
+}
+.rail ol{list-style:none; margin:0 0 26px; padding:0; display:flex; flex-direction:column; gap:1px}
+.rail a{
+  display:flex; gap:10px; text-decoration:none; color:var(--ink-soft);
+  font-size:13.5px; padding:5px 9px; border-radius:5px; transition:background .15s,color .15s;
+}
+.rail a:hover{background:var(--surface-2); color:var(--ink)}
+.rail a span{color:var(--ink-faint); font-family:"IBM Plex Mono",monospace; font-size:11.5px; padding-top:1px}
+.rail a:hover span{color:var(--accent)}
+
+/* ---------- masthead ---------- */
+.masthead{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:34px}
+.kicker{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 14px; font-weight:500;
+}
+h1{
+  font-family:"Newsreader",Georgia,serif; font-weight:500; font-size:clamp(34px,5vw,52px);
+  line-height:1.06; letter-spacing:-.022em; margin:0 0 14px; text-wrap:balance;
+}
+.dek{font-size:16.5px; color:var(--ink-soft); max-width:64ch; margin:0 0 22px}
+.dek em{font-family:"Newsreader",Georgia,serif; font-size:18px}
+.meta{display:flex; flex-wrap:wrap; gap:0; border-top:1px solid var(--line); padding-top:16px}
+.meta div{padding-right:30px; margin-right:30px; border-right:1px solid var(--line)}
+.meta div:last-child{border-right:0; margin-right:0; padding-right:0}
+.meta dt{font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-faint); font-weight:600}
+.meta dd{margin:3px 0 0; font-size:14px; font-weight:500}
+
+/* ---------- sections ---------- */
+section{margin:0 0 62px; scroll-margin-top:24px}
+.sec-head{display:flex; align-items:baseline; gap:14px; margin:0 0 8px}
+.sec-num{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--accent);
+  border:1px solid var(--accent); border-radius:4px; padding:2px 7px; flex:none;
+  background:var(--accent-soft);
+}
+h2{
+  font-family:"Newsreader",Georgia,serif; font-weight:500; font-size:29px;
+  letter-spacing:-.015em; margin:0; line-height:1.15;
+}
+.sec-note{color:var(--ink-soft); max-width:72ch; margin:0 0 24px; font-size:15px}
+h3{font-size:12.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); margin:34px 0 14px; font-weight:600}
+
+/* ---------- figure ---------- */
+figure{margin:0 0 8px}
+.canvas{
+  background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:20px; overflow-x:auto; box-shadow:var(--shadow);
+}
+.canvas svg{display:block; min-width:1180px; width:100%; height:auto}
+figcaption,.cap{font-size:13px; color:var(--ink-soft); margin-top:11px; max-width:76ch}
+figcaption b,.cap b{color:var(--ink); font-weight:600}
+
+.legend{display:flex; flex-wrap:wrap; gap:7px; margin:0 0 16px; padding:0; list-style:none}
+.legend li{
+  display:flex; align-items:center; gap:7px; font-size:12px; font-weight:500;
+  border:1px solid var(--line); border-radius:20px; padding:3px 12px 3px 9px; background:var(--surface);
+}
+.swatch{width:11px; height:11px; border-radius:3px; border:1.5px solid; flex:none}
+
+/* ---------- ER diagrams (hand-authored SVG, themed by tokens) ---------- */
+.erd{
+  background:var(--surface); border:1px solid var(--line); border-radius:10px;
+  padding:18px 16px; overflow-x:auto; box-shadow:var(--shadow);
+}
+.erd svg{display:block; width:100%; height:auto}
+.erd.w5 svg{min-width:1500px}
+.erd.w3 svg{min-width:900px}
+
+.erd .bx{fill:var(--surface); stroke:var(--ec); stroke-width:1.5}
+.erd .hd{fill:var(--ecbg)}
+.erd .en{font:600 13px "IBM Plex Mono",monospace; fill:var(--ec)}
+.erd .an{font:400 10.5px "IBM Plex Mono",monospace; fill:var(--ink)}
+.erd .ky{font:600 8.5px "IBM Plex Mono",monospace; fill:var(--ec)}
+.erd .ty{font:400 9px "IBM Plex Mono",monospace; fill:var(--ink-faint); text-anchor:end}
+.erd .sep{stroke:var(--line); stroke-width:1}
+.erd .ln{stroke:var(--ink-faint); stroke-width:1.5; fill:none}
+.erd .ln.opt{stroke-dasharray:5 4}
+.erd .cd{font:500 10px "IBM Plex Mono",monospace; fill:var(--ink-faint); text-anchor:middle}
+.erd .vb{font:italic 10px "IBM Plex Sans",sans-serif; fill:var(--ink-faint); text-anchor:middle}
+.erd .stub{font:500 10px "IBM Plex Sans",sans-serif; fill:var(--ink-faint)}
+.erd .grp{font:600 10px "IBM Plex Mono",monospace; fill:var(--ink-faint); letter-spacing:.1em}
+
+.erd .strong{--ec:var(--ent-strong);  --ecbg:var(--ent-strong-bg)}
+.erd .cat   {--ec:var(--ent-catalog); --ecbg:var(--ent-catalog-bg)}
+.erd .assoc {--ec:var(--ent-assoc);   --ecbg:var(--ent-assoc-bg)}
+.erd .weak  {--ec:var(--ent-weak);    --ecbg:var(--ent-weak-bg)}
+
+.erd-title{
+  display:flex; align-items:center; gap:11px; margin:30px 0 11px;
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-faint); font-weight:600;
+}
+.erd-title::after{content:""; flex:1; height:1px; background:var(--line)}
+.erd-title em{font-family:"IBM Plex Sans",sans-serif; font-style:normal; text-transform:none; letter-spacing:0; color:var(--ink-soft); font-weight:400; font-size:12.5px}
+
+/* ---------- entity cards ---------- */
+.block-label{
+  display:flex; align-items:center; gap:11px; margin:28px 0 12px;
+  font-family:"IBM Plex Mono",monospace; font-size:11.5px; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--ink-faint); font-weight:600;
+}
+.block-label::after{content:""; flex:1; height:1px; background:var(--line)}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(228px,1fr)); gap:10px}
+.ent{
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:12px 14px; display:flex; flex-direction:column; gap:5px;
+}
+.ent-name{
+  font-family:"IBM Plex Mono",monospace; font-size:13.5px; font-weight:600;
+  color:var(--ent-c); word-break:break-word;
+}
+.ent-tag{
+  align-self:flex-start; font-size:9.5px; letter-spacing:.09em; text-transform:uppercase;
+  font-weight:600; padding:2px 7px; border-radius:3px;
+  background:var(--ent-bg); color:var(--ent-c);
+}
+.ent p{margin:0; font-size:12.5px; color:var(--ink-soft); line-height:1.48}
+.ent[data-t="strong"]{--ent-c:var(--ent-strong); --ent-bg:var(--ent-strong-bg)}
+.ent[data-t="catalog"]{--ent-c:var(--ent-catalog); --ent-bg:var(--ent-catalog-bg)}
+.ent[data-t="assoc"]{--ent-c:var(--ent-assoc); --ent-bg:var(--ent-assoc-bg)}
+.ent[data-t="weak"]{--ent-c:var(--ent-weak); --ent-bg:var(--ent-weak-bg)}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; border:1px solid var(--line); border-radius:9px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:620px}
+th{
+  text-align:left; font-size:10px; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--ink-faint); font-weight:600; padding:11px 14px;
+  border-bottom:1px solid var(--line-strong); white-space:nowrap; background:var(--surface-2);
+}
+td{padding:11px 14px; border-bottom:1px solid var(--line); vertical-align:top}
+tr:last-child td{border-bottom:0}
+td code{
+  font-size:12.5px; background:var(--surface-2); padding:1px 5px; border-radius:3px;
+  color:var(--ink); white-space:nowrap;
+}
+td.n{font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--ink-soft)}
+.assoc-cell code{background:var(--ent-assoc-bg); color:var(--ent-assoc); font-weight:600}
+
+/* ---------- findings ---------- */
+.finds{display:flex; flex-direction:column; gap:0; border:1px solid var(--line); border-radius:9px; overflow:hidden; background:var(--surface)}
+.find{display:grid; grid-template-columns:52px minmax(0,1fr); border-bottom:1px solid var(--line)}
+.find:last-child{border-bottom:0}
+.find-id{
+  font-family:"IBM Plex Mono",monospace; font-size:12px; font-weight:600; color:var(--bad);
+  padding:15px 0 15px 15px; letter-spacing:.02em;
+}
+.find[data-k="add"] .find-id{color:var(--accent)}
+.find-body{padding:15px 16px 15px 0}
+.find-body h5{margin:0 0 5px; font-size:14.5px; font-weight:600; line-height:1.35}
+.find-body p{margin:0; font-size:13.5px; color:var(--ink-soft)}
+.find-body p + p{margin-top:6px}
+.find-body .fix{color:var(--ink); font-size:13px}
+.find-body .fix b{color:var(--good); font-weight:600}
+.find-body code{font-family:"IBM Plex Mono",monospace; font-size:12.5px; background:var(--surface-2); padding:1px 5px; border-radius:3px}
+
+/* ---------- normal forms ---------- */
+.nf{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; margin-bottom:20px}
+.nf-card{border:1px solid var(--line); border-radius:9px; padding:15px 16px; background:var(--surface)}
+.nf-card .nf-t{display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:7px}
+.nf-card b{font-family:"IBM Plex Mono",monospace; font-size:16px; font-weight:600}
+.nf-ok{font-size:11px; font-weight:600; color:var(--good); letter-spacing:.05em}
+.nf-card p{margin:0; font-size:12.5px; color:var(--ink-soft); line-height:1.5}
+
+/* ---------- callout ---------- */
+.callout{
+  border-left:3px solid var(--accent); background:var(--accent-soft);
+  padding:14px 18px; border-radius:0 8px 8px 0; margin:20px 0; font-size:14px;
+}
+.callout p{margin:0; color:var(--ink)}
+.callout p + p{margin-top:8px}
+.callout strong{font-weight:600}
+
+/* ---------- footer ---------- */
+.foot{border-top:2px solid var(--ink); padding-top:22px; margin-top:16px; display:flex; flex-wrap:wrap; gap:26px; justify-content:space-between; align-items:flex-end}
+.foot p{margin:0; font-size:13.5px; color:var(--ink-soft); max-width:52ch}
+.phases{display:flex; flex-wrap:wrap; gap:6px}
+.ph{
+  font-family:"IBM Plex Mono",monospace; font-size:11px; padding:4px 10px; border-radius:20px;
+  border:1px solid var(--line); color:var(--ink-faint);
+}
+.ph.done{border-color:var(--accent); background:var(--accent-soft); color:var(--accent); font-weight:600}
+
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+
+@media (max-width:1000px){
+  .shell{grid-template-columns:1fr}
+  .rail{position:static; height:auto; border-right:0; border-bottom:1px solid var(--line); padding:24px 22px 14px}
+  .rail ol{flex-direction:row; flex-wrap:wrap; margin-bottom:12px}
+  .rail a{border:1px solid var(--line); border-radius:20px; padding:4px 12px; font-size:12.5px}
+  .main{padding:28px 22px 70px}
+  .meta div{border-right:0; padding-right:0; margin:0 26px 10px 0}
+}
+</style>
+
+<div class="shell">
+
+  <nav class="rail" aria-label="Contenido">
+    <div class="rail-mark">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <ellipse cx="7.5" cy="8" rx="2.3" ry="3" fill="var(--accent)"/>
+        <ellipse cx="14" cy="6.4" rx="2.1" ry="2.8" fill="var(--accent)"/>
+        <ellipse cx="19" cy="11" rx="1.9" ry="2.4" fill="var(--accent)"/>
+        <path d="M13.4 12.2c2.6 0 5 2.4 5 4.9 0 1.9-1.5 3-3.4 3-1.2 0-1.9-.5-3-.5s-1.8.5-3 .5c-1.9 0-3.4-1.1-3.4-3 0-2.5 2.4-4.9 5-4.9h2.8z" fill="var(--accent)"/>
+      </svg>
+      <b>PetCare</b>
+    </div>
+
+    <h4>Documento</h4>
+    <ol>
+      <li><a href="#flujo"><span>01</span>El ciclo de atención</a></li>
+      <li><a href="#mer"><span>02</span>MER completo</a></li>
+      <li><a href="#entidades"><span>03</span>Las 27 entidades</a></li>
+      <li><a href="#nm"><span>04</span>Las 7 relaciones N:M</a></li>
+      <li><a href="#uno"><span>05</span>Las 3 relaciones 1:1</a></li>
+      <li><a href="#revision"><span>06</span>Revisión crítica</a></li>
+      <li><a href="#normal"><span>07</span>Formas normales</a></li>
+      <li><a href="#integridad"><span>08</span>Política de borrado</a></li>
+      <li><a href="#tipos"><span>09</span>Tipos de dato</a></li>
+    </ol>
+  </nav>
+
+  <main class="main">
+
+    <header class="masthead">
+      <p class="kicker">Fases 0 – 2 · Modelo de datos</p>
+      <h1>Modelo Entidad-Relación de una clínica veterinaria</h1>
+      <p class="dek">El paciente es la mascota; el cliente es quien la lleva. Esa disociación
+      —<em>ausente en la medicina humana</em>— es la primera decisión estructural del modelo y
+      condiciona todo lo demás.</p>
+      <dl class="meta">
+        <div><dt>Entidades</dt><dd>27</dd></div>
+        <div><dt>Relaciones</dt><dd>34</dd></div>
+        <div><dt>N:M resueltas</dt><dd>7</dd></div>
+        <div><dt>Normalización</dt><dd>BCFN</dd></div>
+        <div><dt>Motor</dt><dd>PostgreSQL 16</dd></div>
+      </dl>
+    </header>
+
+    <!-- ══════════════ 01 ══════════════ -->
+    <section id="flujo">
+      <div class="sec-head"><span class="sec-num">01</span><h2>El ciclo de atención, como lo ve el modelo</h2></div>
+      <p class="sec-note">Un turno se convierte en un encuentro clínico, el encuentro produce
+      diagnósticos, tratamientos y una receta, y el consumo se traslada a una factura dirigida al
+      tutor. Este diagrama muestra el camino completo y dónde cada relación muchos-a-muchos se
+      resuelve con una entidad asociativa.</p>
+
+      <ul class="legend">
+        <li><span class="swatch" style="background:var(--ent-strong-bg); border-color:var(--ent-strong)"></span>Entidad fuerte</li>
+        <li><span class="swatch" style="background:var(--ent-catalog-bg); border-color:var(--ent-catalog)"></span>Catálogo</li>
+        <li><span class="swatch" style="background:var(--ent-assoc-bg); border-color:var(--ent-assoc)"></span>Asociativa (resuelve N:M)</li>
+        <li><span class="swatch" style="background:var(--ent-weak-bg); border-color:var(--ent-weak)"></span>Entidad débil</li>
+      </ul>
+
+      <figure>
+        <div class="canvas">
+          <svg viewBox="0 0 1300 604" role="img" aria-label="Diagrama del ciclo de atención: cliente tiene mascotas, la mascota tiene citas que se concretan en consultas, la consulta produce tratamientos, diagnósticos vía entidad asociativa, y una receta que enlaza medicamentos vía receta_detalle; la mascota recibe vacunas vía aplicacion_vacuna y registros de peso; el cliente recibe facturas cuyo detalle apunta a un servicio o un medicamento.">
+            <defs>
+              <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0 1 L9 5 L0 9 z" fill="currentColor"/>
+              </marker>
+            </defs>
+
+            <g stroke="currentColor" fill="none" stroke-width="1.4" color="var(--ink-faint)" marker-end="url(#ar)">
+              <!-- spine -->
+              <path d="M174 172 H229"/>
+              <path d="M386 172 H441"/>
+              <path d="M598 172 H653"/>
+              <!-- consulta -> tratamiento -->
+              <path d="M760 148 V64 H865"/>
+              <!-- consulta -> consulta_diagnostico -> diagnostico -->
+              <path d="M810 172 H865"/>
+              <path d="M1050 172 H1105"/>
+              <!-- consulta -> receta -->
+              <path d="M800 196 V292 H865"/>
+              <!-- receta -> receta_detalle -> medicamento -->
+              <path d="M961 304 V357"/>
+              <path d="M1050 388 H1105"/>
+              <!-- mascota -> aplicacion_vacuna -> vacuna -->
+              <path d="M311 196 V249"/>
+              <path d="M311 304 V357"/>
+              <!-- mascota -> registro_peso -->
+              <path d="M350 196 V230 H523 V249"/>
+              <!-- cliente -> factura -->
+              <path d="M99 196 V479"/>
+              <!-- factura -> detalle -> item -->
+              <path d="M174 510 H229"/>
+              <path d="M386 510 H441"/>
+            </g>
+            <!-- consulta -> registro_peso (opcional) -->
+            <g stroke="currentColor" fill="none" stroke-width="1.4" stroke-dasharray="4 4" color="var(--ink-faint)" marker-end="url(#ar)">
+              <path d="M690 196 V272 H591"/>
+            </g>
+
+            <!-- cardinality labels -->
+            <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="var(--ink-faint)" text-anchor="middle">
+              <text x="201" y="165">1:N</text>
+              <text x="413" y="165">1:N</text>
+              <text x="625" y="165">1:0..1</text>
+              <text x="837" y="165">N:M</text>
+              <text x="1077" y="165">N:M</text>
+              <text x="812" y="57">1:N</text>
+              <text x="833" y="285">1:0..1</text>
+              <text x="985" y="336" text-anchor="start">N:M</text>
+              <text x="335" y="228" text-anchor="start">N:M</text>
+              <text x="335" y="336" text-anchor="start">N:M</text>
+              <text x="123" y="360" text-anchor="start">1:N</text>
+              <text x="201" y="503">1:N</text>
+              <text x="647" y="266" text-anchor="start">opcional</text>
+            </g>
+            <!-- relation verbs -->
+            <g font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--ink-faint)" text-anchor="middle" font-style="italic">
+              <text x="201" y="192">es tutor de</text>
+              <text x="413" y="192">tiene</text>
+              <text x="625" y="192">se concreta</text>
+              <text x="201" y="530">se compone</text>
+            </g>
+
+            <!-- ENTITY BOXES -->
+            <g font-family="IBM Plex Mono, monospace" font-size="12.5" font-weight="600" text-anchor="middle">
+              <!-- fuertes -->
+              <g fill="var(--ent-strong-bg)" stroke="var(--ent-strong)" stroke-width="1.4">
+                <rect x="24" y="148" width="150" height="48" rx="6"/>
+                <rect x="236" y="148" width="150" height="48" rx="6"/>
+                <rect x="448" y="148" width="150" height="48" rx="6"/>
+                <rect x="660" y="148" width="150" height="48" rx="6"/>
+                <rect x="24" y="486" width="150" height="48" rx="6"/>
+              </g>
+              <g fill="var(--ent-strong)">
+                <text x="99" y="177">cliente</text>
+                <text x="311" y="177">mascota</text>
+                <text x="523" y="177">cita</text>
+                <text x="735" y="177">consulta</text>
+                <text x="99" y="515">factura</text>
+              </g>
+
+              <!-- catálogos -->
+              <g fill="var(--ent-catalog-bg)" stroke="var(--ent-catalog)" stroke-width="1.4">
+                <rect x="1112" y="148" width="164" height="48" rx="6"/>
+                <rect x="1112" y="364" width="164" height="48" rx="6"/>
+                <rect x="236" y="364" width="150" height="48" rx="6"/>
+              </g>
+              <g fill="var(--ent-catalog)">
+                <text x="1194" y="177">diagnostico</text>
+                <text x="1194" y="393">medicamento</text>
+                <text x="311" y="393">vacuna</text>
+              </g>
+
+              <!-- asociativas -->
+              <g fill="var(--ent-assoc-bg)" stroke="var(--ent-assoc)" stroke-width="1.6">
+                <rect x="866" y="148" width="184" height="48" rx="6"/>
+                <rect x="866" y="358" width="184" height="48" rx="6"/>
+                <rect x="236" y="250" width="150" height="48" rx="6"/>
+                <rect x="236" y="486" width="150" height="48" rx="6"/>
+              </g>
+              <g fill="var(--ent-assoc)" font-size="11">
+                <text x="958" y="170">consulta_</text><text x="958" y="184">diagnostico</text>
+                <text x="958" y="380">receta_</text><text x="958" y="394">detalle</text>
+                <text x="311" y="272">aplicacion_</text><text x="311" y="286">vacuna</text>
+                <text x="311" y="508">factura_</text><text x="311" y="522">detalle</text>
+              </g>
+
+              <!-- débiles -->
+              <g fill="var(--ent-weak-bg)" stroke="var(--ent-weak)" stroke-width="1.4" stroke-dasharray="5 3">
+                <rect x="866" y="250" width="184" height="48" rx="6"/>
+                <rect x="448" y="250" width="150" height="48" rx="6"/>
+                <rect x="866" y="40" width="184" height="48" rx="6"/>
+              </g>
+              <g fill="var(--ent-weak)">
+                <text x="958" y="279">receta</text>
+                <text x="523" y="279" font-size="11.5">registro_peso</text>
+                <text x="958" y="69">tratamiento</text>
+              </g>
+
+              <!-- arco exclusivo -->
+              <g fill="var(--ent-catalog-bg)" stroke="var(--ent-catalog)" stroke-width="1.4">
+                <rect x="442" y="486" width="164" height="48" rx="6"/>
+              </g>
+              <line x1="442" y1="510" x2="606" y2="510" stroke="var(--ent-catalog)" stroke-width="1.2" stroke-dasharray="3 3"/>
+              <g fill="var(--ent-catalog)" font-size="10.5">
+                <text x="524" y="503">servicio</text>
+                <text x="524" y="527">medicamento</text>
+              </g>
+              <g font-family="IBM Plex Sans, sans-serif" font-size="10" fill="var(--ink-faint)" font-style="italic">
+                <text x="618" y="506" text-anchor="start">arco exclusivo:</text>
+                <text x="618" y="519" text-anchor="start">exactamente uno</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+        <figcaption><b>Las cuatro cajas ocre son el corazón académico del modelo:</b> cada una
+        resuelve una relación N:M y guarda atributos que no pertenecen a ninguna de las dos
+        entidades que asocia. La dosis de un fármaco no es propiedad del medicamento ni de la
+        receta, sino del hecho de prescribir <em>ese</em> medicamento en <em>esa</em> receta.</figcaption>
+      </figure>
+    </section>
+
+    <!-- ══════════════ 02 ══════════════ -->
+    <section id="mer">
+      <div class="sec-head"><span class="sec-num">02</span><h2>El MER completo, bloque por bloque</h2></div>
+      <p class="sec-note">El MER completo, dibujado por bloques. Cada caja lista la clave
+      primaria, las foráneas y las claves candidatas con su tipo de dato; los atributos
+      puramente descriptivos se omiten para que el esqueleto relacional quede legible. Las
+      referencias entre bloques se marcan con una flecha etiquetada.</p>
+
+      <ul class="legend">
+        <li><span class="swatch" style="background:var(--ent-strong-bg); border-color:var(--ent-strong)"></span>Entidad fuerte</li>
+        <li><span class="swatch" style="background:var(--ent-catalog-bg); border-color:var(--ent-catalog)"></span>Catálogo</li>
+        <li><span class="swatch" style="background:var(--ent-assoc-bg); border-color:var(--ent-assoc)"></span>Asociativa</li>
+        <li><span class="swatch" style="background:var(--ent-weak-bg); border-color:var(--ent-weak)"></span>Entidad débil</li>
+      </ul>
+
+      <div class="erd-title">Bloque A <em>· Seguridad y personas</em></div>
+<div class="erd w5">
+  <svg viewBox="0 0 1615 358" role="img" aria-label="Bloque A: rol clasifica usuarios; un usuario accede como veterinario en relación uno a uno opcional; veterinario y especialidad se asocian mediante veterinario_especialidad; cliente enlaza con mascota en el bloque B.">
+    <defs><marker id="arA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-faint)"/></marker></defs>
+        <g class="cat" transform="translate(30,78)">
+        <rect class="bx" width="275" height="85" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">rol</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">SMALLINT</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">codigo</text>
+        <text class="ty" x="263" y="60">VARCHAR(20)</text>
+        <text class="an" x="46" y="79">nombre</text>
+        <text class="ty" x="263" y="79">VARCHAR(50)</text>
+        </g>
+        <g class="strong" transform="translate(350,59)">
+        <rect class="bx" width="275" height="123" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">usuario</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK</text>
+        <text class="an" x="46" y="60">rol_id</text>
+        <text class="ty" x="263" y="60">SMALLINT</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">nombre_usuario</text>
+        <text class="ty" x="263" y="79">VARCHAR(50)</text>
+        <text class="ky" x="12" y="98">UK</text>
+        <text class="an" x="46" y="98">email</text>
+        <text class="ty" x="263" y="98">VARCHAR(120)</text>
+        <text class="an" x="46" y="117">password_hash</text>
+        <text class="ty" x="263" y="117">VARCHAR(255)</text>
+        </g>
+        <g class="strong" transform="translate(670,59)">
+        <rect class="bx" width="275" height="123" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">veterinario</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK·UK</text>
+        <text class="an" x="46" y="60">usuario_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">matricula</text>
+        <text class="ty" x="263" y="79">VARCHAR(30)</text>
+        <text class="ky" x="12" y="98">UK</text>
+        <text class="an" x="46" y="98">documento</text>
+        <text class="ty" x="263" y="98">VARCHAR(20)</text>
+        <text class="an" x="46" y="117">activo</text>
+        <text class="ty" x="263" y="117">BOOLEAN</text>
+        </g>
+        <g class="assoc" transform="translate(990,78)">
+        <rect class="bx" width="275" height="85" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">veterinario_especialidad</text>
+        <text class="ky" x="12" y="41">PK·FK</text>
+        <text class="an" x="46" y="41">veterinario_id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">PK·FK</text>
+        <text class="an" x="46" y="60">especialidad_id</text>
+        <text class="ty" x="263" y="60">SMALLINT</text>
+        <text class="an" x="46" y="79">es_principal</text>
+        <text class="ty" x="263" y="79">BOOLEAN</text>
+        </g>
+        <g class="cat" transform="translate(1310,78)">
+        <rect class="bx" width="275" height="85" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">especialidad</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">SMALLINT</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">nombre</text>
+        <text class="ty" x="263" y="60">VARCHAR(80)</text>
+        <text class="an" x="46" y="79">activo</text>
+        <text class="ty" x="263" y="79">BOOLEAN</text>
+        </g>
+        <g class="strong" transform="translate(30,218)">
+        <rect class="bx" width="275" height="123" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">cliente</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">tipo_documento</text>
+        <text class="ty" x="263" y="60">VARCHAR(10)</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">documento</text>
+        <text class="ty" x="263" y="79">VARCHAR(20)</text>
+        <text class="ky" x="12" y="98">UK</text>
+        <text class="an" x="46" y="98">email</text>
+        <text class="ty" x="263" y="98">VARCHAR(120)</text>
+        <text class="an" x="46" y="117">telefono</text>
+        <text class="ty" x="263" y="117">VARCHAR(25)</text>
+        </g>
+        <path class="ln" d="M305 120H350" marker-end="url(#arA)"/>
+        <text class="cd" x="327.5" y="112">1:N</text>
+        <text class="vb" x="327.5" y="135">clasifica</text>
+        <path class="ln" d="M625 120H670" marker-end="url(#arA)"/>
+        <text class="cd" x="647.5" y="112">1:0..1</text>
+        <text class="vb" x="647.5" y="135">accede como</text>
+        <path class="ln" d="M945 120H990" marker-end="url(#arA)"/>
+        <text class="cd" x="967.5" y="112">1:N</text>
+        <text class="vb" x="967.5" y="135">posee</text>
+        <path class="ln" d="M1310 120H1265" marker-end="url(#arA)"/>
+        <text class="cd" x="1287" y="112">1:N</text>
+        <text class="vb" x="1287" y="135">agrupa</text>
+        <path class="ln" d="M305 280H395" marker-end="url(#arA)"/>
+        <text class="stub" x="404" y="277">→ mascota</text>
+        <text class="stub" x="404" y="291" opacity=".75">Bloque B · 1:N</text>
+        <text class="grp" x="30" y="30">BLOQUE A</text>
+  </svg>
+</div>
+
+      <div class="erd-title">Bloque B <em>· Mascota y taxonomía</em></div>
+<div class="erd w5">
+  <svg viewBox="0 0 1615 392" role="img" aria-label="Bloque B: especie agrupa razas y clasifica mascotas; mascota referencia raza mediante clave foránea compuesta; mascota_condicion asocia mascotas con condiciones médicas; registro_peso guarda la serie temporal de peso de cada mascota.">
+    <defs><marker id="arB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-faint)"/></marker></defs>
+        <g class="cat" transform="translate(30,78)">
+        <rect class="bx" width="275" height="85" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">especie</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">SMALLINT</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">nombre</text>
+        <text class="ty" x="263" y="60">VARCHAR(50)</text>
+        <text class="an" x="46" y="79">esperanza_vida_anios</text>
+        <text class="ty" x="263" y="79">SMALLINT</text>
+        </g>
+        <g class="cat" transform="translate(350,68)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">raza</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK·UK</text>
+        <text class="an" x="46" y="60">especie_id</text>
+        <text class="ty" x="263" y="60">SMALLINT</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">nombre</text>
+        <text class="ty" x="263" y="79">VARCHAR(80)</text>
+        <text class="an" x="46" y="98">tamanio</text>
+        <text class="ty" x="263" y="98">VARCHAR(15)</text>
+        </g>
+        <g class="strong" transform="translate(670,40)">
+        <rect class="bx" width="275" height="161" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">mascota</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK</text>
+        <text class="an" x="46" y="60">cliente_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">FK</text>
+        <text class="an" x="46" y="79">especie_id</text>
+        <text class="ty" x="263" y="79">SMALLINT</text>
+        <text class="ky" x="12" y="98">FK</text>
+        <text class="an" x="46" y="98">raza_id</text>
+        <text class="ty" x="263" y="98">INTEGER</text>
+        <text class="an" x="46" y="117">nombre</text>
+        <text class="ty" x="263" y="117">VARCHAR(60)</text>
+        <text class="an" x="46" y="136">sexo</text>
+        <text class="ty" x="263" y="136">CHAR(1)</text>
+        <text class="ky" x="12" y="155">UK</text>
+        <text class="an" x="46" y="155">microchip</text>
+        <text class="ty" x="263" y="155">VARCHAR(25)</text>
+        </g>
+        <g class="assoc" transform="translate(990,68)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">mascota_condicion</text>
+        <text class="ky" x="12" y="41">PK·FK</text>
+        <text class="an" x="46" y="41">mascota_id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">PK·FK</text>
+        <text class="an" x="46" y="60">condicion_medica_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="an" x="46" y="79">severidad</text>
+        <text class="ty" x="263" y="79">VARCHAR(10)</text>
+        <text class="an" x="46" y="98">activa</text>
+        <text class="ty" x="263" y="98">BOOLEAN</text>
+        </g>
+        <g class="cat" transform="translate(1310,78)">
+        <rect class="bx" width="275" height="85" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">condicion_medica</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">nombre</text>
+        <text class="ty" x="263" y="60">VARCHAR(100)</text>
+        <text class="an" x="46" y="79">tipo</text>
+        <text class="ty" x="263" y="79">VARCHAR(15)</text>
+        </g>
+        <g class="weak" transform="translate(670,250)">
+        <rect class="bx" width="275" height="123" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">registro_peso</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK·UK</text>
+        <text class="an" x="46" y="60">mascota_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">FK</text>
+        <text class="an" x="46" y="79">consulta_id</text>
+        <text class="ty" x="263" y="79">INTEGER</text>
+        <text class="ky" x="12" y="98">UK</text>
+        <text class="an" x="46" y="98">fecha_registro</text>
+        <text class="ty" x="263" y="98">DATE</text>
+        <text class="an" x="46" y="117">peso_kg</text>
+        <text class="ty" x="263" y="117">NUMERIC(6,2)</text>
+        </g>
+        <path class="ln" d="M305 120H350" marker-end="url(#arB)"/>
+        <text class="cd" x="327.5" y="112">1:N</text>
+        <text class="vb" x="327.5" y="135">agrupa</text>
+        <path class="ln" d="M625 120H670" marker-end="url(#arB)"/>
+        <text class="cd" x="647.5" y="112">0..1:N</text>
+        <text class="vb" x="647" y="135">clasifica</text>
+        <path class="ln" d="M945 120H990" marker-end="url(#arB)"/>
+        <text class="cd" x="967.5" y="112">N:M</text>
+        <text class="vb" x="967.5" y="135">presenta</text>
+        <path class="ln" d="M1310 120H1265" marker-end="url(#arB)"/>
+        <text class="cd" x="1287" y="112">N:M</text>
+        <text class="vb" x="1287" y="135">afecta</text>
+        <path class="ln" d="M167 78V26H790V40" marker-end="url(#arB)"/>
+        <text class="cd" x="478" y="19">1:N · clasifica</text>
+        <path class="ln" d="M807 201V250" marker-end="url(#arB)"/>
+        <text class="cd" x="855" y="230">1:N</text>
+        <text class="stub" x="30" y="300">FK compuesta</text>
+        <text class="stub" x="30" y="316" opacity=".75">(raza_id, especie_id)</text>
+        <text class="stub" x="30" y="332" opacity=".75">→ raza (id, especie_id)</text>
+        <text class="grp" x="30" y="30">BLOQUE B</text>
+  </svg>
+</div>
+
+      <div class="erd-title">Bloque C <em>· Agenda y atención clínica</em></div>
+<div class="erd w5">
+  <svg viewBox="0 0 1615 378" role="img" aria-label="Bloque C: una solicitud del sitio público se convierte en cita; la cita se concreta en una consulta en relación uno a uno opcional; la consulta produce diagnósticos mediante consulta_diagnostico e indica tratamientos.">
+    <defs><marker id="arC" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-faint)"/></marker></defs>
+        <g class="strong" transform="translate(30,68)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">solicitud_cita</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK·UK</text>
+        <text class="an" x="46" y="60">cita_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="an" x="46" y="79">nombre_contacto</text>
+        <text class="ty" x="263" y="79">VARCHAR(120)</text>
+        <text class="an" x="46" y="98">estado</text>
+        <text class="ty" x="263" y="98">VARCHAR(12)</text>
+        </g>
+        <g class="strong" transform="translate(350,49)">
+        <rect class="bx" width="275" height="142" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">cita</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK</text>
+        <text class="an" x="46" y="60">mascota_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">FK</text>
+        <text class="an" x="46" y="79">veterinario_id</text>
+        <text class="ty" x="263" y="79">INTEGER</text>
+        <text class="ky" x="12" y="98">FK</text>
+        <text class="an" x="46" y="98">servicio_id</text>
+        <text class="ty" x="263" y="98">INTEGER</text>
+        <text class="an" x="46" y="117">fecha_hora_inicio</text>
+        <text class="ty" x="263" y="117">TIMESTAMPTZ</text>
+        <text class="an" x="46" y="136">estado</text>
+        <text class="ty" x="263" y="136">VARCHAR(12)</text>
+        </g>
+        <g class="strong" transform="translate(670,49)">
+        <rect class="bx" width="275" height="142" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">consulta</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK</text>
+        <text class="an" x="46" y="60">mascota_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">FK</text>
+        <text class="an" x="46" y="79">veterinario_id</text>
+        <text class="ty" x="263" y="79">INTEGER</text>
+        <text class="ky" x="12" y="98">FK·UK</text>
+        <text class="an" x="46" y="98">cita_id</text>
+        <text class="ty" x="263" y="98">INTEGER</text>
+        <text class="an" x="46" y="117">fecha_hora</text>
+        <text class="ty" x="263" y="117">TIMESTAMPTZ</text>
+        <text class="an" x="46" y="136">tipo</text>
+        <text class="ty" x="263" y="136">VARCHAR(15)</text>
+        </g>
+        <g class="assoc" transform="translate(990,68)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">consulta_diagnostico</text>
+        <text class="ky" x="12" y="41">PK·FK</text>
+        <text class="an" x="46" y="41">consulta_id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">PK·FK</text>
+        <text class="an" x="46" y="60">diagnostico_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="an" x="46" y="79">tipo</text>
+        <text class="ty" x="263" y="79">VARCHAR(12)</text>
+        <text class="an" x="46" y="98">es_principal</text>
+        <text class="ty" x="263" y="98">BOOLEAN</text>
+        </g>
+        <g class="cat" transform="translate(1310,78)">
+        <rect class="bx" width="275" height="85" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">diagnostico</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">codigo</text>
+        <text class="ty" x="263" y="60">VARCHAR(15)</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">nombre</text>
+        <text class="ty" x="263" y="79">VARCHAR(120)</text>
+        </g>
+        <g class="weak" transform="translate(990,250)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">tratamiento</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK</text>
+        <text class="an" x="46" y="60">consulta_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="an" x="46" y="79">fecha_inicio</text>
+        <text class="ty" x="263" y="79">DATE</text>
+        <text class="an" x="46" y="98">estado</text>
+        <text class="ty" x="263" y="98">VARCHAR(12)</text>
+        </g>
+        <path class="ln opt" d="M305 120H350" marker-end="url(#arC)"/>
+        <text class="cd" x="327.5" y="112">0..1:0..1</text>
+        <text class="vb" x="327.5" y="135">se convierte</text>
+        <path class="ln" d="M625 120H670" marker-end="url(#arC)"/>
+        <text class="cd" x="647.5" y="112">1:0..1</text>
+        <text class="vb" x="647.5" y="135">se concreta</text>
+        <path class="ln" d="M945 120H990" marker-end="url(#arC)"/>
+        <text class="cd" x="967.5" y="112">N:M</text>
+        <text class="vb" x="967.5" y="135">produce</text>
+        <path class="ln" d="M1310 120H1265" marker-end="url(#arC)"/>
+        <text class="cd" x="1287" y="112">N:M</text>
+        <text class="vb" x="1287" y="135">aparece en</text>
+        <path class="ln" d="M807 191V222H1127V250" marker-end="url(#arC)"/>
+        <text class="cd" x="967" y="214">1:N · indica</text>
+        <text class="stub" x="30" y="300">← mascota, veterinario</text>
+        <text class="stub" x="30" y="316" opacity=".75">Bloque A y B · 1:N cada una</text>
+        <text class="grp" x="30" y="30">BLOQUE C</text>
+  </svg>
+</div>
+
+      <div class="erd-title">Bloque D <em>· Prescripción y vacunación</em></div>
+<div class="erd w3">
+  <svg viewBox="0 0 975 415" role="img" aria-label="Bloque D: la receta contiene medicamentos mediante receta_detalle, que guarda dosis, frecuencia, duración y vía; aplicacion_vacuna asocia mascotas con vacunas guardando lote y fecha de refuerzo; vacuna_especie limita qué vacunas admite cada especie.">
+    <defs><marker id="arD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-faint)"/></marker></defs>
+        <g class="weak" transform="translate(30,58)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">receta</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK·UK</text>
+        <text class="an" x="46" y="60">consulta_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">folio</text>
+        <text class="ty" x="263" y="79">VARCHAR(20)</text>
+        <text class="an" x="46" y="98">fecha_emision</text>
+        <text class="ty" x="263" y="98">DATE</text>
+        </g>
+        <g class="assoc" transform="translate(350,39)">
+        <rect class="bx" width="275" height="142" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">receta_detalle</text>
+        <text class="ky" x="12" y="41">PK·FK</text>
+        <text class="an" x="46" y="41">receta_id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">PK·FK</text>
+        <text class="an" x="46" y="60">medicamento_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="an" x="46" y="79">dosis</text>
+        <text class="ty" x="263" y="79">VARCHAR(60)</text>
+        <text class="an" x="46" y="98">frecuencia</text>
+        <text class="ty" x="263" y="98">VARCHAR(60)</text>
+        <text class="an" x="46" y="117">duracion_dias</text>
+        <text class="ty" x="263" y="117">SMALLINT</text>
+        <text class="an" x="46" y="136">via_administracion</text>
+        <text class="ty" x="263" y="136">VARCHAR(15)</text>
+        </g>
+        <g class="cat" transform="translate(670,48)">
+        <rect class="bx" width="275" height="123" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">medicamento</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">nombre</text>
+        <text class="ty" x="263" y="60">VARCHAR(120)</text>
+        <text class="an" x="46" y="79">principio_activo</text>
+        <text class="ty" x="263" y="79">VARCHAR(120)</text>
+        <text class="an" x="46" y="98">stock_actual</text>
+        <text class="ty" x="263" y="98">INTEGER</text>
+        <text class="an" x="46" y="117">precio_venta</text>
+        <text class="ty" x="263" y="117">NUMERIC(12,2)</text>
+        </g>
+        <g class="assoc" transform="translate(30,235)">
+        <rect class="bx" width="275" height="161" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">aplicacion_vacuna</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK·UK</text>
+        <text class="an" x="46" y="60">mascota_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">FK·UK</text>
+        <text class="an" x="46" y="79">vacuna_id</text>
+        <text class="ty" x="263" y="79">INTEGER</text>
+        <text class="ky" x="12" y="98">FK</text>
+        <text class="an" x="46" y="98">veterinario_id</text>
+        <text class="ty" x="263" y="98">INTEGER</text>
+        <text class="ky" x="12" y="117">UK</text>
+        <text class="an" x="46" y="117">fecha_aplicacion</text>
+        <text class="ty" x="263" y="117">DATE</text>
+        <text class="an" x="46" y="136">fecha_proximo_refuerzo</text>
+        <text class="ty" x="263" y="136">DATE</text>
+        <text class="an" x="46" y="155">lote</text>
+        <text class="ty" x="263" y="155">VARCHAR(40)</text>
+        </g>
+        <g class="cat" transform="translate(350,263)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">vacuna</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">nombre</text>
+        <text class="ty" x="263" y="60">VARCHAR(100)</text>
+        <text class="an" x="46" y="79">intervalo_refuerzo_meses</text>
+        <text class="ty" x="263" y="79">SMALLINT</text>
+        <text class="an" x="46" y="98">precio</text>
+        <text class="ty" x="263" y="98">NUMERIC(12,2)</text>
+        </g>
+        <g class="assoc" transform="translate(670,282)">
+        <rect class="bx" width="275" height="66" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">vacuna_especie</text>
+        <text class="ky" x="12" y="41">PK·FK</text>
+        <text class="an" x="46" y="41">vacuna_id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">PK·FK</text>
+        <text class="an" x="46" y="60">especie_id</text>
+        <text class="ty" x="263" y="60">SMALLINT</text>
+        </g>
+        <path class="ln" d="M305 110H350" marker-end="url(#arD)"/>
+        <text class="cd" x="327.5" y="102">1:N</text>
+        <text class="vb" x="327.5" y="125">contiene</text>
+        <path class="ln" d="M670 110H625" marker-end="url(#arD)"/>
+        <text class="cd" x="647" y="102">N:M</text>
+        <text class="vb" x="647" y="125">prescrito en</text>
+        <path class="ln" d="M350 315H305" marker-end="url(#arD)"/>
+        <text class="cd" x="327" y="307">N:M</text>
+        <text class="vb" x="327" y="330">aplicada en</text>
+        <path class="ln" d="M625 315H670" marker-end="url(#arD)"/>
+        <text class="cd" x="647.5" y="307">N:M</text>
+        <text class="vb" x="647.5" y="330">indicada para</text>
+        <text class="stub" x="30" y="48">← consulta · Bloque C · 1:0..1</text>
+        <text class="stub" x="30" y="225">← mascota · Bloque B · 1:N</text>
+        <text class="stub" x="670" y="272">← especie · Bloque B · 1:N</text>
+        <text class="grp" x="30" y="22">BLOQUE D</text>
+  </svg>
+</div>
+
+      <div class="erd-title">Bloque E <em>· Comercial</em></div>
+<div class="erd w3">
+  <svg viewBox="0 0 975 262" role="img" aria-label="Bloque E: la factura se emite al cliente y se compone de líneas de detalle; cada línea apunta a un servicio o a un medicamento mediante un arco exclusivo, y su subtotal es una columna generada por el motor.">
+    <defs><marker id="arE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 L9 5 L0 9 z" fill="var(--ink-faint)"/></marker></defs>
+        <g class="strong" transform="translate(30,40)">
+        <rect class="bx" width="275" height="161" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">factura</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK</text>
+        <text class="an" x="46" y="60">cliente_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">numero</text>
+        <text class="ty" x="263" y="79">VARCHAR(20)</text>
+        <text class="an" x="46" y="98">subtotal</text>
+        <text class="ty" x="263" y="98">NUMERIC(12,2)</text>
+        <text class="an" x="46" y="117">descuento</text>
+        <text class="ty" x="263" y="117">NUMERIC(12,2)</text>
+        <text class="an" x="46" y="136">total</text>
+        <text class="ty" x="263" y="136">NUMERIC(12,2)</text>
+        <text class="an" x="46" y="155">estado</text>
+        <text class="ty" x="263" y="155">VARCHAR(10)</text>
+        </g>
+        <g class="assoc" transform="translate(350,30)">
+        <rect class="bx" width="275" height="180" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">factura_detalle</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">FK</text>
+        <text class="an" x="46" y="60">factura_id</text>
+        <text class="ty" x="263" y="60">INTEGER</text>
+        <text class="ky" x="12" y="79">FK</text>
+        <text class="an" x="46" y="79">servicio_id</text>
+        <text class="ty" x="263" y="79">INTEGER</text>
+        <text class="ky" x="12" y="98">FK</text>
+        <text class="an" x="46" y="98">medicamento_id</text>
+        <text class="ty" x="263" y="98">INTEGER</text>
+        <text class="ky" x="12" y="117">FK</text>
+        <text class="an" x="46" y="117">mascota_id</text>
+        <text class="ty" x="263" y="117">INTEGER</text>
+        <text class="an" x="46" y="136">cantidad</text>
+        <text class="ty" x="263" y="136">NUMERIC(8,2)</text>
+        <text class="an" x="46" y="155">precio_unitario</text>
+        <text class="ty" x="263" y="155">NUMERIC(12,2)</text>
+        <text class="an" x="46" y="174">subtotal</text>
+        <text class="ty" x="263" y="174">GENERATED</text>
+        </g>
+        <g class="cat" transform="translate(670,68)">
+        <rect class="bx" width="275" height="104" rx="7"/>
+        <path class="hd" d="M0 28V7Q0 0 7 0H268Q275 0 275 7V28Z"/>
+        <line class="sep" x1="0" y1="28" x2="275" y2="28"/>
+        <text class="en" x="12" y="19">servicio</text>
+        <text class="ky" x="12" y="41">PK</text>
+        <text class="an" x="46" y="41">id</text>
+        <text class="ty" x="263" y="41">INTEGER</text>
+        <text class="ky" x="12" y="60">UK</text>
+        <text class="an" x="46" y="60">codigo</text>
+        <text class="ty" x="263" y="60">VARCHAR(15)</text>
+        <text class="ky" x="12" y="79">UK</text>
+        <text class="an" x="46" y="79">nombre</text>
+        <text class="ty" x="263" y="79">VARCHAR(120)</text>
+        <text class="an" x="46" y="98">precio_base</text>
+        <text class="ty" x="263" y="98">NUMERIC(12,2)</text>
+        </g>
+        <path class="ln" d="M305 120H350" marker-end="url(#arE)"/>
+        <text class="cd" x="327.5" y="112">1:N</text>
+        <text class="vb" x="327.5" y="135">se compone de</text>
+        <path class="ln" d="M670 120H625" marker-end="url(#arE)"/>
+        <text class="cd" x="647" y="112">N:M</text>
+        <text class="vb" x="647" y="135">facturado en</text>
+        <text class="stub" x="30" y="30">← cliente · Bloque A · 1:N</text>
+        <text class="stub" x="350" y="228">← medicamento · Bloque D · N:M</text>
+        <text class="stub" x="350" y="244" opacity=".75">arco exclusivo: servicio_id o medicamento_id, nunca ambos</text>
+        <text class="grp" x="30" y="14">BLOQUE E</text>
+  </svg>
+</div>
+      <p class="cap"><b>Cómo leer las claves:</b> <code>PK·FK</code> marca una columna que es a la
+      vez parte de la clave primaria compuesta y clave foránea — la firma inconfundible de una
+      entidad asociativa. <code>FK·UK</code> marca una foránea con restricción única: así se
+      implementa toda relación 1:1 en el modelo relacional. Cada tipo de dato mostrado está
+      justificado en la sección 09.</p>
+
+    </section>
+
+    <!-- ══════════════ 03 ══════════════ -->
+    <section id="entidades">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Las 27 entidades</h2></div>
+      <p class="sec-note">Cada entidad existe por una razón funcional concreta. Ninguna se agregó
+      para engrosar el modelo: al final del documento se listan las que fueron descartadas y por qué.</p>
+
+      <div class="block-label">Bloque A · Seguridad y personas</div>
+      <div class="grid">
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">rol</span><p>Perfiles de acceso: administrador, veterinario, recepcionista.</p></div>
+        <div class="ent" data-t="strong"><span class="ent-tag">Fuerte</span><span class="ent-name">usuario</span><p>Credencial de autenticación. No es una persona del negocio, es una identidad de acceso.</p></div>
+        <div class="ent" data-t="strong"><span class="ent-tag">Fuerte</span><span class="ent-name">cliente</span><p>Tutor responsable. Titular del vínculo comercial y de contacto.</p></div>
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">especialidad</span><p>Cirugía, dermatología, cardiología, animales exóticos.</p></div>
+        <div class="ent" data-t="strong"><span class="ent-tag">Fuerte</span><span class="ent-name">veterinario</span><p>Profesional con matrícula. Puede existir sin usuario del sistema.</p></div>
+        <div class="ent" data-t="assoc"><span class="ent-tag">Asociativa N:M</span><span class="ent-name">veterinario_especialidad</span><p>Un profesional acumula varias especialidades a lo largo de su carrera.</p></div>
+      </div>
+
+      <div class="block-label">Bloque B · Mascota y taxonomía</div>
+      <div class="grid">
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">especie</span><p>Nivel taxonómico superior. Aporta esperanza de vida para alertas geriátricas.</p></div>
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">raza</span><p>Dependiente de especie. Clave alternativa <code>(id, especie_id)</code> para la FK compuesta.</p></div>
+        <div class="ent" data-t="strong"><span class="ent-tag">Núcleo</span><span class="ent-name">mascota</span><p>Centro del expediente. Edad, peso actual y estado de vacunación son derivados, no columnas.</p></div>
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">condicion_medica</span><p>Alergias, crónicas y congénitas unificadas bajo un atributo discriminante.</p></div>
+        <div class="ent" data-t="assoc"><span class="ent-tag">Asociativa N:M</span><span class="ent-name">mascota_condicion</span><p>Guarda severidad y fecha de detección: propias del vínculo, no del catálogo.</p></div>
+        <div class="ent" data-t="weak"><span class="ent-tag">Débil</span><span class="ent-name">registro_peso</span><p>Serie temporal. Evita comprimir un histórico entero en una sola columna.</p></div>
+      </div>
+
+      <div class="block-label">Bloque C · Agenda y atención clínica</div>
+      <div class="grid">
+        <div class="ent" data-t="strong"><span class="ent-tag">Cuarentena</span><span class="ent-name">solicitud_cita</span><p>Pedidos del sitio público sin verificar. Impide que el maestro de clientes se llene de basura.</p></div>
+        <div class="ent" data-t="strong"><span class="ent-tag">Fuerte</span><span class="ent-name">cita</span><p>Compromiso futuro. Protegida contra solapamientos con <code>EXCLUDE USING gist</code>.</p></div>
+        <div class="ent" data-t="strong"><span class="ent-tag">Fuerte</span><span class="ent-name">consulta</span><p>Encuentro clínico realizado. Unidad atómica del historial.</p></div>
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">diagnostico</span><p>Nomenclatura normalizada. Sin ella no hay reportes de morbilidad posibles.</p></div>
+        <div class="ent" data-t="assoc"><span class="ent-tag">Asociativa N:M</span><span class="ent-name">consulta_diagnostico</span><p>Distingue presuntivo de definitivo y marca el diagnóstico principal.</p></div>
+        <div class="ent" data-t="weak"><span class="ent-tag">Débil</span><span class="ent-name">tratamiento</span><p>Plan terapéutico con fechas propias. No es catálogo: no se repite entre pacientes.</p></div>
+      </div>
+
+      <div class="block-label">Bloque D · Prescripción y vacunación</div>
+      <div class="grid">
+        <div class="ent" data-t="weak"><span class="ent-tag">1:1 con consulta</span><span class="ent-name">receta</span><p>Sin <code>mascota_id</code> ni <code>veterinario_id</code>: ambos se derivan de la consulta.</p></div>
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">medicamento</span><p>Principio activo, presentación, concentración, stock y precio.</p></div>
+        <div class="ent" data-t="assoc"><span class="ent-tag">Asociativa N:M ★</span><span class="ent-name">receta_detalle</span><p>Dosis, frecuencia, duración, vía e instrucciones. La relación exigida por el enunciado.</p></div>
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">vacuna</span><p>Intervalo de refuerzo y edad mínima: calculan la fecha del próximo refuerzo.</p></div>
+        <div class="ent" data-t="assoc"><span class="ent-tag">Asociativa N:M</span><span class="ent-name">vacuna_especie</span><p>Impide ofrecer una vacuna canina para un felino desde el propio modelo.</p></div>
+        <div class="ent" data-t="assoc"><span class="ent-tag">Asociativa N:M ★</span><span class="ent-name">aplicacion_vacuna</span><p>Lote, dosis y refuerzo. Clave surrogate porque los refuerzos repiten el par mascota-vacuna.</p></div>
+      </div>
+
+      <div class="block-label">Bloque E · Comercial</div>
+      <div class="grid">
+        <div class="ent" data-t="catalog"><span class="ent-tag">Catálogo</span><span class="ent-name">servicio</span><p>Prestaciones facturables. <code>visible_publico</code> alimenta el sitio institucional.</p></div>
+        <div class="ent" data-t="strong"><span class="ent-tag">Fuerte</span><span class="ent-name">factura</span><p>Documento fiscal inmutable emitido al tutor, no a la mascota.</p></div>
+        <div class="ent" data-t="assoc"><span class="ent-tag">Asociativa N:M ★</span><span class="ent-name">factura_detalle</span><p>Arco exclusivo servicio/medicamento. <code>subtotal</code> es columna generada por el motor.</p></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ 04 ══════════════ -->
+    <section id="nm">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Las 7 relaciones N:M y su resolución</h2></div>
+      <p class="sec-note">Toda relación muchos-a-muchos se resuelve con una entidad asociativa.
+      Cuatro de ellas llevan atributos propios: datos que describen la asociación misma y que no
+      tienen dónde vivir en ninguna de las dos entidades originales.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Entidad A</th><th>Entidad B</th><th>Entidad asociativa</th><th>Atributos propios de la asociación</th></tr></thead>
+          <tbody>
+            <tr><td><code>veterinario</code></td><td><code>especialidad</code></td><td class="assoc-cell"><code>veterinario_especialidad</code></td><td>es_principal, certificado_en</td></tr>
+            <tr><td><code>mascota</code></td><td><code>condicion_medica</code></td><td class="assoc-cell"><code>mascota_condicion</code></td><td>severidad, fecha_deteccion, activa, notas</td></tr>
+            <tr><td><code>consulta</code></td><td><code>diagnostico</code></td><td class="assoc-cell"><code>consulta_diagnostico</code></td><td>tipo (presuntivo / definitivo / descartado), es_principal, notas</td></tr>
+            <tr><td><code>receta</code></td><td><code>medicamento</code></td><td class="assoc-cell"><code>receta_detalle</code></td><td><strong>dosis, frecuencia, duracion_dias, via_administracion, cantidad, instrucciones</strong></td></tr>
+            <tr><td><code>mascota</code></td><td><code>vacuna</code></td><td class="assoc-cell"><code>aplicacion_vacuna</code></td><td><strong>fecha_aplicacion, fecha_proximo_refuerzo, lote, dosis_numero, via, observaciones</strong></td></tr>
+            <tr><td><code>vacuna</code></td><td><code>especie</code></td><td class="assoc-cell"><code>vacuna_especie</code></td><td class="n">— asociación pura</td></tr>
+            <tr><td><code>factura</code></td><td><code>servicio</code> / <code>medicamento</code></td><td class="assoc-cell"><code>factura_detalle</code></td><td>cantidad, precio_unitario, descuento_linea, subtotal <em>(generado)</em></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <p><strong>Por qué <code>aplicacion_vacuna</code> no lleva clave primaria compuesta.</strong>
+        La clave natural <code>(mascota_id, vacuna_id)</code> parece correcta hasta que Max recibe
+        su segunda antirrábica: la inserción viola la primaria. Incluir la fecha daría una PK de tres
+        columnas que se propagaría a cualquier tabla que la referencie en el futuro.</p>
+        <p>Se usa <code>id</code> surrogate más <code>UNIQUE (mascota_id, vacuna_id, fecha_aplicacion)</code>:
+        la regla de negocio se conserva intacta, sin arrastrar una clave ancha por todo el esquema.</p>
+      </div>
+    </section>
+
+    <!-- ══════════════ 05 ══════════════ -->
+    <section id="uno">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Las 3 relaciones 1:1</h2></div>
+      <p class="sec-note">Las tres son opcionales de un lado, y todas se implementan igual: clave
+      foránea con restricción <code>UNIQUE</code>. La decisión de en qué tabla poner esa foránea
+      no es arbitraria — va del lado que puede no existir.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Relación</th><th>Cardinalidad</th><th>Implementación</th><th>Por qué de ese lado</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>usuario</code> — <code>veterinario</code></td>
+              <td class="n">(0,1) : (0,1)</td>
+              <td><code>veterinario.usuario_id</code> NULL + UNIQUE</td>
+              <td>Hay veterinarios sin acceso al sistema y usuarios que no son veterinarios. La FK va donde produce menos nulos.</td>
+            </tr>
+            <tr>
+              <td><code>cita</code> — <code>consulta</code></td>
+              <td class="n">(0,1) : (0,1)</td>
+              <td><code>consulta.cita_id</code> NULL + UNIQUE</td>
+              <td>La cita existe antes que la consulta. Con la FK en <code>cita</code>, toda cita programada quedaría con un nulo esperando ser atendida.</td>
+            </tr>
+            <tr>
+              <td><code>consulta</code> — <code>receta</code></td>
+              <td class="n">(1,1) : (0,1)</td>
+              <td><code>receta.consulta_id</code> NOT NULL + UNIQUE</td>
+              <td>No existe receta sin consulta que la origine, pero la mayoría de las consultas no generan receta.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════ 06 ══════════════ -->
+    <section id="revision">
+      <div class="sec-head"><span class="sec-num">06</span><h2>Revisión crítica: 12 correcciones</h2></div>
+      <p class="sec-note">El primer borrador del MER tenía defectos reales. Estos son los que la
+      revisión detectó y cómo se corrigieron. Diez son enmiendas al modelo; dos son entidades que
+      simplemente faltaban para poder cumplir un requisito.</p>
+
+      <div class="finds">
+        <div class="find"><div class="find-id">P1</div><div class="find-body">
+          <h5>Redundancia transitiva en <code>receta</code></h5>
+          <p><code>mascota_id</code> y <code>veterinario_id</code> eran alcanzables por <code>receta → consulta → {mascota, veterinario}</code>. Un atributo no clave dependiendo de otro atributo no clave: violación de 3FN. Permitía una receta de "Luna" colgando de una consulta de "Max".</p>
+          <p class="fix"><b>Corrección:</b> ambos atributos eliminados. Se acceden por JOIN.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P2</div><div class="find-body">
+          <h5>El peso vivía en dos lugares a la vez</h5>
+          <p><code>mascota.peso_actual</code> y <code>consulta.peso_kg</code> registraban el mismo hecho sin garantía de coincidir. Peor: comprimir un histórico de peso en una columna destruye el seguimiento que el propio enunciado pide.</p>
+          <p class="fix"><b>Corrección:</b> entidad <code>registro_peso</code>. El peso actual pasa a ser derivado — la medición más reciente.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P3</div><div class="find-body">
+          <h5>Alergias como texto libre — violación de 1FN</h5>
+          <p>En la práctica se cargaría <code>"Penicilina, Polen, Pollo"</code> en una sola celda. Responder "¿qué mascotas son alérgicas a la penicilina?" exigiría un <code>LIKE</code> con falsos positivos, y no habría dónde guardar la severidad de cada una.</p>
+          <p class="fix"><b>Corrección:</b> catálogo <code>condicion_medica</code> más asociativa <code>mascota_condicion</code>.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P4</div><div class="find-body">
+          <h5>Diagnóstico y tratamiento como columnas de texto</h5>
+          <p>Doble problema: el enunciado pide varios diagnósticos por consulta (atributo multivaluado, 1FN), y como texto libre "Gastritis", "gastritis" y "Gastritis aguda" son tres conceptos distintos para la base de datos.</p>
+          <p class="fix"><b>Corrección:</b> <code>diagnostico</code> pasa a catálogo con N:M; <code>tratamiento</code> pasa a entidad 1:N dependiente de la consulta.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P5</div><div class="find-body">
+          <h5>Cardinalidad invertida entre cita y consulta</h5>
+          <p>La foránea estaba en <code>cita.consulta_id</code>. Contradice la temporalidad del negocio y no impedía que dos citas apuntaran a la misma consulta.</p>
+          <p class="fix"><b>Corrección:</b> la FK pasa a <code>consulta.cita_id</code>, nullable y <code>UNIQUE</code>.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P6</div><div class="find-body">
+          <h5>Una mascota podía ser un felino de raza labrador</h5>
+          <p><code>especie_id</code> y <code>raza_id</code> eran dos foráneas independientes. Cada una válida por separado; la combinación, un absurdo que ninguna restricción impedía.</p>
+          <p class="fix"><b>Corrección:</b> clave alternativa <code>UNIQUE (id, especie_id)</code> en <code>raza</code> y foránea compuesta <code>(raza_id, especie_id)</code> desde <code>mascota</code>. El motor rechaza la combinación imposible.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P7</div><div class="find-body">
+          <h5><code>cliente_id</code> duplicado en cita y consulta</h5>
+          <p>Derivable por <code>cita → mascota → cliente</code>. Otra transitividad, con el riesgo de registrar un tutor distinto al de la mascota atendida.</p>
+          <p class="fix"><b>Corrección:</b> eliminado de ambas. Se conserva en <code>factura</code>, donde no hay transitividad: una factura se emite al cliente directamente y puede cubrir varias de sus mascotas.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P8</div><div class="find-body">
+          <h5>Clave primaria inviable en <code>aplicacion_vacuna</code></h5>
+          <p>La PK <code>(mascota_id, vacuna_id)</code> impide registrar refuerzos: la segunda dosis anual viola la primaria.</p>
+          <p class="fix"><b>Corrección:</b> PK surrogate más <code>UNIQUE (mascota_id, vacuna_id, fecha_aplicacion)</code>.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P9</div><div class="find-body">
+          <h5>Detalle de factura sin control del arco exclusivo</h5>
+          <p>Con ambas foráneas nullables y sin restricción, una línea podía tener servicio y medicamento a la vez, o ninguno de los dos con <code>tipo_item = 'SERVICIO'</code>.</p>
+          <p class="fix"><b>Corrección:</b> <code>CHECK</code> que amarra <code>tipo_item</code> a exactamente una foránea no nula.</p>
+        </div></div>
+
+        <div class="find"><div class="find-id">P10</div><div class="find-body">
+          <h5>El subtotal se calculaba solo en el frontend</h5>
+          <p>El enunciado es explícito en no confiar únicamente en JavaScript. Una carga por <code>psql</code> o un bug del formulario podían grabar <code>cantidad=2, precio=100, subtotal=5</code>.</p>
+          <p class="fix"><b>Corrección:</b> <code>subtotal</code> pasa a columna <code>GENERATED ALWAYS AS (cantidad * precio_unitario - descuento_linea) STORED</code>. Aritméticamente imposible de corromper.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">P11</div><div class="find-body">
+          <h5>Faltaba una entidad: el modelo no soportaba el sitio público</h5>
+          <p>La web permite agendar cita, pero <code>cita</code> exige <code>mascota_id</code> y <code>veterinario_id</code> no nulos. Un visitante anónimo no tiene mascota registrada — el requisito era irrealizable con el modelo.</p>
+          <p class="fix"><b>Se agrega:</b> <code>solicitud_cita</code>, zona de cuarentena que la recepción revisa y convierte en cita real.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">P12</div><div class="find-body">
+          <h5>Faltaba una entidad: nada impedía vacunar mal</h5>
+          <p>Sin asociar vacunas a especies, el formulario mostraría el catálogo completo y la validación quedaría hardcodeada en el frontend, fuera del alcance de la base de datos.</p>
+          <p class="fix"><b>Se agrega:</b> <code>vacuna_especie</code>.</p>
+        </div></div>
+      </div>
+    </section>
+
+    <!-- ══════════════ 07 ══════════════ -->
+    <section id="normal">
+      <div class="sec-head"><span class="sec-num">07</span><h2>Verificación de formas normales</h2></div>
+      <p class="sec-note">Cada forma se verificó tabla por tabla, no por inspección general.
+      Las dos desnormalizaciones que quedan son deliberadas, están documentadas y las protege
+      el motor.</p>
+
+      <div class="nf">
+        <div class="nf-card">
+          <div class="nf-t"><b>1FN</b><span class="nf-ok">CUMPLE</span></div>
+          <p>Sin grupos repetitivos ni listas en una celda tras corregir P3 y P4. <code>telefono</code> y <code>telefono_alternativo</code> son roles semánticos distintos, no un grupo repetitivo.</p>
+        </div>
+        <div class="nf-card">
+          <div class="nf-t"><b>2FN</b><span class="nf-ok">CUMPLE</span></div>
+          <p>Verificada en las cinco tablas con clave compuesta. Contraejemplo controlado: si <code>receta_detalle</code> guardara <code>principio_activo</code>, dependería solo de <code>medicamento_id</code>. No está.</p>
+        </div>
+        <div class="nf-card">
+          <div class="nf-t"><b>3FN</b><span class="nf-ok">CUMPLE</span></div>
+          <p>Dos transitividades eliminadas (P1, P7). Los precios y descripciones congelados en <code>factura_detalle</code> son snapshots históricos, no dependencias vivas.</p>
+        </div>
+        <div class="nf-card">
+          <div class="nf-t"><b>BCFN</b><span class="nf-ok">CUMPLE</span></div>
+          <p>Revisadas las seis tablas con múltiples claves candidatas. En todas, los determinantes son claves candidatas completas.</p>
+        </div>
+      </div>
+
+      <h3>Desnormalizaciones deliberadas</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Dato</th><th>Por qué se almacena igual</th><th>Qué lo protege</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>factura.total</code> y sus componentes</td>
+              <td>Una factura es un documento fiscal inmutable. Si el precio de un servicio cambia mañana, el total de la factura de hoy no debe cambiar con él.</td>
+              <td><code>TRIGGER</code> de recálculo sobre <code>factura_detalle</code> más <code>CHECK (total = subtotal - descuento + impuesto)</code></td>
+            </tr>
+            <tr>
+              <td><code>factura_detalle.precio_unitario</code></td>
+              <td>Congela el precio de catálogo en el instante de la venta.</td>
+              <td>Se copia desde el catálogo al insertar; nunca se actualiza después</td>
+            </tr>
+            <tr>
+              <td><code>medicamento.stock_actual</code></td>
+              <td>El enunciado pide controlar stock pero no un kardex de movimientos. Un libro completo sería alcance no solicitado.</td>
+              <td><code>CHECK (stock_actual &gt;= 0)</code> más <code>TRIGGER</code> de descuento al facturar</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════ 08 ══════════════ -->
+    <section id="integridad">
+      <div class="sec-head"><span class="sec-num">08</span><h2>Política de borrado: el historial clínico es intocable</h2></div>
+      <p class="sec-note">El criterio es uno solo: <code>CASCADE</code> únicamente donde la entidad
+      hija no tiene identidad propia fuera del padre. En cualquier otro caso, <code>RESTRICT</code>
+      más baja lógica. Borrar una mascota no puede destruir su expediente.</p>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Relación</th><th>Acción</th><th>Razón</th></tr></thead>
+          <tbody>
+            <tr><td><code>mascota</code> → historial clínico</td><td><code>RESTRICT</code></td><td>El expediente bloquea el borrado. La baja es lógica: <code>activo = false</code>.</td></tr>
+            <tr><td><code>cliente</code> → <code>mascota</code>, <code>factura</code></td><td><code>RESTRICT</code></td><td>Un tutor con mascotas o facturas no se elimina.</td></tr>
+            <tr><td><code>receta</code> → <code>receta_detalle</code></td><td><code>CASCADE</code></td><td>Una línea de receta no existe fuera de su receta. Es una parte, no un ente autónomo.</td></tr>
+            <tr><td><code>factura</code> → <code>factura_detalle</code></td><td><code>CASCADE</code></td><td>Composición: mismo criterio.</td></tr>
+            <tr><td><code>consulta</code> → diagnósticos y tratamientos</td><td><code>CASCADE</code></td><td>Composición: mismo criterio.</td></tr>
+            <tr><td>Catálogos referenciados</td><td><code>RESTRICT</code></td><td>Nunca se borra un catálogo en uso; se marca <code>activo = false</code>.</td></tr>
+            <tr><td><code>usuario</code> → <code>veterinario</code></td><td><code>SET NULL</code></td><td>Quitar el acceso al sistema no elimina al profesional del registro clínico.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Entidades descartadas y por qué</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Entidad</th><th>Motivo del descarte</th></tr></thead>
+          <tbody>
+            <tr><td><code>pago</code></td><td>El enunciado modela el cobro como un estado de la factura, no como transacciones parciales.</td></tr>
+            <tr><td><code>movimiento_stock</code></td><td>No se pidió gestión de inventario. El stock se controla con <code>CHECK</code> y trigger.</td></tr>
+            <tr><td><code>permiso</code> + <code>rol_permiso</code></td><td>Con tres roles fijos y bien delimitados, una matriz granular es sobreingeniería.</td></tr>
+            <tr><td><code>horario_atencion</code></td><td>La restricción de no solapamiento cubre el requisito real sin una tabla adicional.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══════════════ 09 ══════════════ -->
+    <section id="tipos">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Tipos de dato y justificación técnica</h2></div>
+      <p class="sec-note">Elegir un tipo no es rellenar un formulario: cada elección tiene una
+      consecuencia comprobable. Estos son los doce criterios que se aplican de forma transversal
+      en el modelo, con el argumento que los sostiene. El diccionario completo, atributo por
+      atributo, está en <code>04-diccionario-datos.md</code>.</p>
+
+      <div class="finds">
+        <div class="find" data-k="add"><div class="find-id">C1</div><div class="find-body">
+          <h5>Claves primarias: <code>INTEGER GENERATED ALWAYS AS IDENTITY</code></h5>
+          <p><code>INTEGER</code> son 4 bytes con rango ±2.147.483.647: una clínica que registre mil consultas diarias tardaría 5.800 años en agotarlo. <code>BIGINT</code> duplicaría el peso de cada clave <em>y de cada foránea que la referencia</em> sin ningún beneficio.</p>
+          <p class="fix"><b>Por qué IDENTITY y no SERIAL:</b> <code>IDENTITY</code> es estándar SQL:2003 y <code>ALWAYS</code> prohíbe insertar un valor a mano — lo que impide desincronizar la secuencia, el error clásico de <code>SERIAL</code> cuando alguien inserta un id explícito y las siguientes inserciones automáticas fallan por colisión.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C2</div><div class="find-body">
+          <h5>Claves de catálogo: <code>SMALLINT</code></h5>
+          <p>En <code>rol</code>, <code>especie</code> y <code>especialidad</code>. Son 2 bytes para catálogos de decenas de filas. El ahorro no está en la tabla catálogo, que es diminuta, sino en <strong>cada fila que la referencia</strong>: <code>especie_id</code> se repite en cada mascota. Es una decisión que escala con la tabla grande, no con la chica.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C3</div><div class="find-body">
+          <h5>Dinero: <code>NUMERIC(12,2)</code>, jamás <code>FLOAT</code></h5>
+          <p>El punto flotante almacena en base 2 y no representa exactamente valores decimales. En PostgreSQL, <code>SELECT 0.1::float8 + 0.2::float8 = 0.3::float8</code> devuelve <strong>falso</strong>.</p>
+          <p class="fix"><b>La consecuencia concreta:</b> sumar 300 líneas de factura acumula descuadres de centavos que hacen fallar el <code>CHECK (total = subtotal - descuento + impuesto)</code> sin motivo aparente. <code>NUMERIC</code> es aritmética decimal exacta.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C4</div><div class="find-body">
+          <h5>Peso: <code>NUMERIC(6,2)</code></h5>
+          <p>Exacto y no flotante porque <strong>el peso alimenta el cálculo de dosis</strong>. Un error de redondeo en la dosis de un fármaco es un riesgo clínico, no un detalle contable. Con <code>(6,2)</code> el rango va de un hámster de 0,03 kg a un equino de 800 kg, con precisión de 10 gramos.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C5</div><div class="find-body">
+          <h5><code>DATE</code> para días, <code>TIMESTAMPTZ</code> para instantes</h5>
+          <p>La distinción no es cosmética. <code>fecha_aplicacion</code> de una vacuna es un día del calendario: registrar "20/07/2026 a las 14:32:07" guarda una precisión que nadie va a consultar.</p>
+          <p class="fix"><b>Y complica las consultas:</b> comparar <code>fecha_aplicacion = '2026-07-20'</code> fallaría contra un <code>TIMESTAMP</code>, obligando a usar rangos o <code>::date</code> en cada consulta — lo que además <strong>inutiliza el índice</strong>.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C6</div><div class="find-body">
+          <h5><code>TIMESTAMPTZ</code> y no <code>TIMESTAMP</code></h5>
+          <p><code>TIMESTAMP</code> guarda una lectura de reloj sin referencia absoluta: no se sabe a qué instante corresponde. <code>TIMESTAMPTZ</code> normaliza a UTC y convierte a la zona del cliente al leer.</p>
+          <p class="fix"><b>El caso que lo decide:</b> una cita agendada a las 09:00 antes de un cambio de horario de verano. Con <code>TIMESTAMP</code> sigue diciendo 09:00 pero apunta a otro instante real. Para una agenda, que es el corazón de este sistema, la diferencia es funcional.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C7</div><div class="find-body">
+          <h5><code>VARCHAR(n)</code> con longitud deliberada, no <code>TEXT</code> por defecto</h5>
+          <p>En PostgreSQL ambos tienen <strong>idéntico rendimiento y almacenamiento</strong>. La diferencia no es técnica sino semántica: el <code>n</code> documenta y hace cumplir una regla de negocio. <code>telefono VARCHAR(25)</code> declara que un teléfono con prefijo internacional entra en 25 caracteres, y rechaza un valor de 300 que solo puede ser un error de carga.</p>
+          <p class="fix"><b>Se usa TEXT solo</b> para narrativa clínica sin longitud previsible — <code>anamnesis</code>, <code>examen_fisico</code>. Acotar el relato de un veterinario a 500 caracteres sería una restricción inventada.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C8</div><div class="find-body">
+          <h5>Enumerados: <code>VARCHAR</code> + <code>CHECK</code>, no <code>ENUM</code></h5>
+          <p>Un <code>CHECK</code> es igual de estricto para la integridad, pero en un <code>ENUM</code> agregar un valor exige <code>ALTER TYPE</code>, <strong>quitar uno es imposible</strong> y el ordenamiento queda fijado por el orden de declaración.</p>
+          <p class="fix"><b>El escenario real:</b> si mañana la clínica agrega el estado <code>reprogramada</code> a las citas, con <code>CHECK</code> es una línea de <code>ALTER TABLE</code>.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C9</div><div class="find-body">
+          <h5><code>BOOLEAN</code> y no <code>CHAR(1)</code> como bandera</h5>
+          <p><code>BOOLEAN</code> ocupa 1 byte y admite exactamente tres estados. Un <code>CHAR(1)</code> usado como bandera admite <code>'S'</code>, <code>'N'</code>, <code>'s'</code>, <code>'X'</code>, <code>' '</code> — estados inválidos que habría que impedir con un <code>CHECK</code> extra. El tipo correcto <strong>elimina</strong> el problema en lugar de restringirlo.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C10</div><div class="find-body">
+          <h5><code>SMALLINT</code> para magnitudes acotadas por la biología</h5>
+          <p><code>frecuencia_cardiaca</code>, <code>duracion_dias</code>, <code>dosis_numero</code>, <code>intervalo_refuerzo_meses</code>. Ninguna puede acercarse a 32.767: no existe un animal con 40.000 pulsaciones por minuto ni un tratamiento de 90 años. El tipo también <strong>documenta el rango esperado</strong>, y se acompaña de un <code>CHECK</code> con el rango biológico real.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C11</div><div class="find-body">
+          <h5>Identificadores que parecen números pero no lo son</h5>
+          <p><code>documento</code>, <code>microchip</code>, <code>matricula</code>, <code>lote</code>, <code>numero</code> de factura y <code>folio</code> de receta son todos <code>VARCHAR</code>.</p>
+          <p class="fix"><b>Tres razones:</b> llevan letras o prefijos (<code>F-000001</code>); los ceros a la izquierda son significativos y un entero los destruiría; y nunca se opera aritméticamente con ellos. El microchip además es determinante: el estándar ISO 11784 son <strong>15 dígitos</strong>, que ya <em>exceden</em> el rango de <code>INTEGER</code>.</p>
+        </div></div>
+
+        <div class="find" data-k="add"><div class="find-id">C12</div><div class="find-body">
+          <h5>Dónde el texto libre es la decisión correcta</h5>
+          <p><code>receta_detalle.dosis</code> y <code>frecuencia</code> son <code>VARCHAR</code> a propósito: el veterinario escribe <em>"1/2 comprimido"</em> o <em>"0,5 ml por kg"</em>. Forzarlos a numérico obligaría a inventar una unidad común que no existe.</p>
+          <p class="fix"><b>Pero <code>duracion_dias</code> sí es <code>SMALLINT</code>:</b> con él se calcula la fecha de fin del tratamiento y la cantidad a dispensar. La regla es simple — numérico cuando se opera, texto cuando solo se lee.</p>
+        </div></div>
+      </div>
+
+      <h3>Resumen de tipos utilizados</h3>
+      <div class="tw">
+        <table>
+          <thead><tr><th>Tipo</th><th>Bytes</th><th>Dónde se usa</th><th>Criterio</th></tr></thead>
+          <tbody>
+            <tr><td><code>SMALLINT</code></td><td class="n">2</td><td>PK de catálogos, magnitudes acotadas</td><td class="n">C2, C10</td></tr>
+            <tr><td><code>INTEGER</code></td><td class="n">4</td><td>PK generales, claves foráneas, stock</td><td class="n">C1</td></tr>
+            <tr><td><code>NUMERIC(12,2)</code></td><td class="n">variable</td><td>Todo importe monetario</td><td class="n">C3</td></tr>
+            <tr><td><code>NUMERIC(6,2)</code></td><td class="n">variable</td><td>Peso corporal</td><td class="n">C4</td></tr>
+            <tr><td><code>NUMERIC(8,2)</code></td><td class="n">variable</td><td>Cantidades fraccionables</td><td class="n">C3</td></tr>
+            <tr><td><code>NUMERIC(4,1)</code></td><td class="n">variable</td><td>Temperatura corporal</td><td class="n">C4</td></tr>
+            <tr><td><code>CHAR(1)</code></td><td class="n">1</td><td><code>sexo</code> — único caso de longitud fija</td><td class="n">C7</td></tr>
+            <tr><td><code>VARCHAR(n)</code></td><td class="n">variable</td><td>Texto acotado por regla de negocio</td><td class="n">C7, C8, C11</td></tr>
+            <tr><td><code>TEXT</code></td><td class="n">variable</td><td>Narrativa clínica sin longitud previsible</td><td class="n">C7</td></tr>
+            <tr><td><code>BOOLEAN</code></td><td class="n">1</td><td>Banderas y baja lógica</td><td class="n">C9</td></tr>
+            <tr><td><code>DATE</code></td><td class="n">4</td><td>Días de calendario</td><td class="n">C5</td></tr>
+            <tr><td><code>TIMESTAMPTZ</code></td><td class="n">8</td><td>Instantes y columnas de auditoría</td><td class="n">C5, C6</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <p>Con el modelo cerrado y verificado, la Fase 3 deriva el esquema relacional y la Fase 4
+      escribe el DDL de PostgreSQL a mano — sin migraciones automáticas de ningún ORM.</p>
+      <div class="phases">
+        <span class="ph done">F0 análisis</span>
+        <span class="ph done">F1 conceptual</span>
+        <span class="ph done">F2 MER</span>
+        <span class="ph">F3 relacional</span>
+        <span class="ph">F4 DDL</span>
+        <span class="ph">F5 pruebas</span>
+      </div>
+    </footer>
+
+  </main>
+</div>

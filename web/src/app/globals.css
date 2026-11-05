@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===========================================================================
+   PETCARE — Sistema de diseño
+   ---------------------------------------------------------------------------
+   Identidad: verde petróleo profundo como color principal, neutros cálidos con
+   una leve inclinación al verde, y un ámbar que aparece solo donde algo exige
+   atención. Nada de degradados ni de paletas saturadas: la intención es que se
+   lea como un instrumento clínico, no como una app de consumo.
+   =========================================================================== */
+
+@layer base {
+  :root {
+    /* Principal */
+    --verde-900: 11 46 42;      /* #0B2E2A  textos sobre claro, barras oscuras */
+    --verde-800: 13 60 54;      /* #0D3C36 */
+    --verde-700: 20 85 76;      /* #14554C  color de marca */
+    --verde-600: 26 110 98;     /* #1A6E62 */
+    --verde-500: 34 139 123;    /* #228B7B  acciones principales */
+    --verde-200: 183 214 207;   /* #B7D6CF */
+    --verde-100: 219 235 231;   /* #DBEBE7 */
+    --verde-50:  240 247 245;   /* #F0F7F5  fondos suaves */
+
+    /* Acento — solo para lo que pide atención */
+    --ambar-600: 176 112 24;    /* #B07018 */
+    --ambar-500: 201 138 46;    /* #C98A2E */
+    --ambar-100: 250 237 214;   /* #FAEDD6 */
+
+    /* Semánticos */
+    --exito-600: 21 128 92;
+    --exito-100: 220 242 233;
+    --alerta-600: 180 83 9;
+    --alerta-100: 254 237 213;
+    --error-600: 171 46 46;
+    --error-100: 253 228 228;
+    --info-600: 37 99 142;
+    --info-100: 219 236 246;
+
+    /* Neutros, con una pizca de verde para que no se vean grises muertos */
+    --tinta:     18 28 26;      /* #121C1A */
+    --gris-700:  61 76 73;      /* #3D4C49 */
+    --gris-600:  92 107 103;    /* #5C6B67 */
+    --gris-400:  154 168 164;   /* #9AA8A4 */
+    --gris-300:  200 211 207;   /* #C8D3CF */
+    --gris-200:  227 233 231;   /* #E3E9E7 */
+    --gris-100:  240 243 242;   /* #F0F3F2 */
+    --papel:     250 251 250;   /* #FAFBFA */
+    --blanco:    255 255 255;
+
+    --radio: 0.625rem;
+    --sombra-sm: 0 1px 2px rgb(18 28 26 / 0.05);
+    --sombra:    0 1px 3px rgb(18 28 26 / 0.07), 0 8px 24px -12px rgb(18 28 26 / 0.18);
+    --sombra-md: 0 2px 6px rgb(18 28 26 / 0.08), 0 16px 40px -16px rgb(18 28 26 / 0.22);
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  /* Sin esto, una columna de grid crece con su contenido y una tarjeta con una
+     tabla ancha se sale de la pantalla en el celular. */
+  .grid { grid-template-columns: minmax(0, 1fr); }
+
+  body {
+    @apply bg-papel text-tinta antialiased;
+    font-feature-settings: "cv05" 1, "ss01" 1;
+  }
+
+  /* El foco visible nunca se elimina: es la única guía de quien navega con
+     teclado. Se le da un estilo propio en vez de dejar el del navegador. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--verde-500));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection { background: rgb(var(--verde-100)); color: rgb(var(--verde-900)); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---------- Botones ---------- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-medium
+           transition-colors duration-150 disabled:opacity-50
+           disabled:pointer-events-none whitespace-nowrap;
+  }
+  .btn-md { @apply h-10 px-4 text-sm; }
+  .btn-sm { @apply h-8 px-3 text-[13px]; }
+  .btn-lg { @apply h-12 px-6 text-base; }
+
+  .btn-primario   { @apply bg-verde-700 text-white hover:bg-verde-800; }
+  .btn-secundario { @apply bg-white text-verde-800 border border-gris-300 hover:bg-verde-50 hover:border-verde-200; }
+  .btn-fantasma   { @apply text-gris-700 hover:bg-gris-100 hover:text-tinta; }
+  .btn-peligro    { @apply bg-error-600 text-white hover:brightness-110; }
+  .btn-ambar      { @apply bg-ambar-500 text-white hover:bg-ambar-600; }
+
+  /* ---------- Superficies ---------- */
+  .tarjeta {
+    @apply bg-white border border-gris-200 rounded-xl;
+  }
+  .tarjeta-sombra { @apply bg-white border border-gris-200 rounded-xl shadow-suave; }
+
+  /* ---------- Formularios ---------- */
+  .campo {
+    @apply w-full h-10 px-3 rounded-lg border border-gris-300 bg-white text-sm
+           text-tinta placeholder:text-gris-400
+           focus:border-verde-500 focus:ring-2 focus:ring-verde-500/15 focus:outline-none
+           disabled:bg-gris-100 disabled:text-gris-400;
+  }
+  textarea.campo { @apply h-auto py-2 leading-relaxed; }
+  select.campo   { @apply pr-8; }
+
+  .etiqueta {
+    @apply block text-[13px] font-medium text-gris-700 mb-1.5;
+  }
+  .ayuda { @apply mt-1 text-xs text-gris-600; }
+  .error-campo { @apply mt-1 text-xs text-error-600; }
+
+  /* ---------- Insignias de estado ---------- */
+  .insignia {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5
+           text-xs font-medium whitespace-nowrap;
+  }
+  .insignia-neutra  { @apply bg-gris-100 text-gris-700; }
+  .insignia-verde   { @apply bg-exito-100 text-exito-600; }
+  .insignia-ambar   { @apply bg-alerta-100 text-alerta-600; }
+  .insignia-roja    { @apply bg-error-100 text-error-600; }
+  .insignia-azul    { @apply bg-info-100 text-info-600; }
+  .insignia-marca   { @apply bg-verde-100 text-verde-800; }
+
+  /* ---------- Tablas ---------- */
+  .tabla { @apply w-full text-sm border-collapse; }
+  .tabla thead th {
+    @apply text-left text-[11px] font-semibold uppercase tracking-wider
+           text-gris-600 bg-gris-100 px-4 py-2.5 border-b border-gris-200
+           whitespace-nowrap;
+  }
+  .tabla tbody td { @apply px-4 py-3 border-b border-gris-200 align-middle; }
+  .tabla tbody tr:last-child td { @apply border-b-0; }
+  .tabla tbody tr { @apply transition-colors; }
+  .tabla-hover tbody tr:hover { @apply bg-verde-50/60; }
+
+  /* Números que se comparan en columna deben alinearse por dígito. */
+  .cifra { font-variant-numeric: tabular-nums; }
+}
+
+/* Facturas y recetas se imprimen sin el menú ni los botones. */
+@media print {
+  .no-imprimir { display: none !important; }
+  .area-admin { padding-left: 0 !important; }
+  body { background: white; }
+  .tarjeta { border-color: #ccc; break-inside: avoid; }
+}
+
+@layer utilities {
+  .contenedor-app { @apply mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:px-8; }
+  .contenedor-web { @apply mx-auto w-full max-w-[1180px] px-5 sm:px-6 lg:px-8; }
+  .equilibrar { text-wrap: balance; }
+  /* Las tablas anchas se desplazan dentro de su caja: el cuerpo de la página
+     nunca debe desplazarse en horizontal. */
+  .scroll-x { @apply relative overflow-x-auto; -webkit-overflow-scrolling: touch; }
+}
